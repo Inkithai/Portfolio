@@ -18,6 +18,18 @@
             --radius: 8px;
         }
 
+        /* Dark mode variables */
+        .dark-mode {
+            --color-primary: #32b8c6;
+            --color-primary-dark: #2a9aa8;
+            --color-accent: #2158D8;
+            --color-bg: #0f172a;
+            --color-surface: #1e293b;
+            --color-text: #f1f5f9;
+            --color-text-secondary: #94a3b8;
+            --color-border: #334155;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -29,6 +41,7 @@
             line-height: 1.6;
             color: var(--color-text);
             background: var(--color-bg);
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* Navigation */
@@ -38,6 +51,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: all 0.3s;
         }
 
         nav .container {
@@ -74,29 +88,129 @@
             color: var(--color-primary);
         }
 
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-text);
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        .mobile-menu.active {
+            display: block;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: var(--color-surface);
+            padding: 20px;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 10px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            padding: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 60px;
+            position: relative;
+        }
+
+        .toggle-circle {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            transition: transform 0.3s;
+        }
+
+        .light .toggle-circle {
+            transform: translateX(0);
+        }
+
+        .dark .toggle-circle {
+            transform: translateX(32px);
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #2158D8 0%, #32b8c6 100%);
             color: white;
             padding: 100px var(--spacing);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, transparent 20%, var(--color-bg) 150%);
+            opacity: 0.1;
         }
 
         .hero .container {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .hero h1 {
             font-size: 48px;
             margin-bottom: 16px;
             font-weight: 700;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 0.2s;
         }
 
         .hero p {
             font-size: 18px;
             margin-bottom: 32px;
             opacity: 0.95;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 0.4s;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 4px;
+            height: 1.2em;
+            background-color: white;
+            margin-left: 4px;
+            vertical-align: middle;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .cta-buttons {
@@ -104,6 +218,9 @@
             gap: 16px;
             justify-content: center;
             flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 0.6s;
         }
 
         .btn {
@@ -115,6 +232,8 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 16px;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-primary {
@@ -155,6 +274,9 @@
             margin-bottom: 48px;
             text-align: center;
             color: var(--color-text);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
         }
 
         /* About */
@@ -217,6 +339,14 @@
             border-radius: var(--radius);
             border: 1px solid var(--color-border);
             transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        .skill-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .skill-card:hover {
@@ -245,6 +375,10 @@
             font-weight: 500;
         }
 
+
+
+
+
         /* Experience */
         .experience-timeline {
             max-width: 800px;
@@ -259,6 +393,14 @@
             margin-bottom: 24px;
             border: 1px solid var(--color-border);
             border-left: 4px solid var(--color-primary);
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        .experience-item.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .experience-item h3 {
@@ -311,12 +453,51 @@
             border-radius: var(--radius);
             overflow: hidden;
             border: 1px solid var(--color-border);
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s, transform 0.6s;
+            position: relative;
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .project-card:hover {
             border-color: var(--color-accent);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px) scale(1.02);
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .project-header {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8f0f8 100%);
+            padding: 32px;
+            border-bottom: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover .project-header {
+            background: linear-gradient(135deg, #e6f0ff 0%, #d1e7ff 100%);
         }
 
         .project-header {
@@ -367,6 +548,58 @@
             font-weight: 500;
         }
 
+        /* Contact Form */
+        .contact-form {
+            background: var(--color-surface);
+            padding: 32px;
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            background: var(--color-surface);
+            color: var(--color-text);
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .btn-submit {
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 32px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: var(--color-primary-dark);
+        }
+
         /* Publications */
         .publication-card {
             background: var(--color-surface);
@@ -393,6 +626,100 @@
             color: var(--color-text-secondary);
             line-height: 1.8;
         }
+
+        /* Education */
+        .education-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .education-item {
+            background: var(--color-surface);
+            padding: 32px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--color-primary);
+            margin-bottom: 24px;
+            border: 1px solid var(--color-border);
+            border-left: 4px solid var(--color-primary);
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        .education-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .education-item h3 {
+            font-size: 20px;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .institution {
+            color: var(--color-accent);
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .education-period {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .education-description {
+            color: var(--color-text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* Progress Bar */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            z-index: 9999;
+            transition: width 0.1s ease-in-out;
+        }
+
+        /* Back to Top Button */
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, background 0.3s;
+            z-index: 1000;
+        }
+
+        #backToTop.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #backToTop:hover {
+            background: var(--color-primary-dark);
+        }
+
+
 
         /* Footer */
         footer {
@@ -423,11 +750,22 @@
             color: white;
         }
 
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             nav ul {
-                gap: 16px;
-                font-size: 14px;
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
             }
 
             .hero h1 {
@@ -463,26 +801,40 @@
             }
         }
     </style>
+    </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav>
         <div class="container">
             <a href="#home" class="logo">Inkithai</a>
-            <ul>
+            <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="nav-right">
+                <div class="theme-toggle light" id="themeToggle">
+                    <div class="toggle-circle"></div>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <h1>Full-Stack Software Engineer</h1>
+            <h1><span id="typing-text"></span><span class="cursor">|</span></h1>
             <p>Building AI-driven applications and scalable backend systems</p>
             <div class="cta-buttons">
                 <a href="#projects" class="btn btn-primary">View My Work</a>
@@ -502,7 +854,7 @@
                     <p>Currently working as an Associate Software Engineer, I&rsquo;ve led the development of AI-powered learning platforms, intelligent email automation systems, and scalable backend architectures. My experience spans from NLP pipelines and RAG-based retrieval to cloud integrations and microservices.</p>
                     <p>I&rsquo;m passionate about collaborating in Agile teams, solving complex technical challenges, and creating high-impact solutions that make a real difference.</p>
                 </div>
-                <div class="contact-info" id="contact">
+                <div class="contact-info">
                     <div class="contact-item">
                         <label>Location</label>
                         <p>Colombo, Sri Lanka</p>
@@ -523,132 +875,11 @@
                         <label>GitHub</label>
                         <a href="https://github.com/inkithai" target="_blank">github.com/inkithai</a>
                     </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Experience Section -->
-    <section class="experience" id="experience">
-        <div class="container">
-            <h2>Professional Experience</h2>
-            <div class="experience-timeline">
-                <div class="experience-item">
-                    <h3>Associate Software Engineer</h3>
-                    <div class="company">WIS</div>
-                    <div class="period">Jul 2025 – Nov 2025 | Colombo, Sri Lanka</div>
-                    <ul>
-                        <li>Designed, developed, and deployed production-ready LMS with AI-driven learning modules (EduFlow)</li>
-                        <li>Built AI Voice Assistant with contextual Q&A, NLP pipelines, OCR fallback, and Google TTS</li>
-                        <li>Engineered AI assessment generator with adaptive MCQs and PDF/PPT extraction</li>
-                        <li>Created document context extraction pipelines (PDF/PPT/OCR) for AI reasoning</li>
-                        <li>Built AI Email Automation Platform (Drafty.AI) with voice-to-email dictation and Gmail-like filtering</li>
-                        <li>Integrated multi-provider AI models (Gemini, OpenAI, OpenRouter) with fallback logic</li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <h3>Associate Software Engineer</h3>
-                    <div class="company">XYGen.ai</div>
-                    <div class="period">Jan 2025 – Jun 2025 | Colombo, Sri Lanka</div>
-                    <ul>
-                        <li>Developed internal AI-driven tools with LLM-based automation for Legal Docs Summarization platform</li>
-                        <li>Implemented full-stack features using Next.js, Node.js, TypeScript, and cloud-hosted APIs</li>
-                        <li>Designed reusable backend modules and API utilities to improve developer productivity</li>
-                        <li>Enhanced UI workflows using React, Tailwind, and ShadCN</li>
-                        <li>Worked in Agile sprints with structured code reviews and CI/CD deployment workflows</li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <h3>Junior Software Engineer</h3>
-                    <div class="company">XYGen.ai</div>
-                    <div class="period">Jul 2024 – Dec 2024 | Colombo, Sri Lanka</div>
-                    <ul>
-                        <li>Developed backend services using Node.js, Express, and contributed to internal microservices</li>
-                        <li>Built Laravel-based admin dashboard with CRUD modules, RBAC, and API integrations</li>
-                        <li>Implemented reusable UI components using React and Next.js</li>
-                        <li>Collaborated with senior engineers to refine architecture and follow best practices</li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <h3>Software Engineer Intern</h3>
-                    <div class="company">XYGen.ai</div>
-                    <div class="period">Jan 2024 – Jun 2024 | Colombo, Sri Lanka</div>
-                    <ul>
-                        <li>Developed frontend components in React.js</li>
-                        <li>Wrote API routes and utility functions using Node.js and REST design patterns</li>
-                        <li>Contributed to dashboard development using Angular</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section class="projects" id="projects">
-        <div class="container">
-            <h2>Key Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-type">Fullstack + AI/ML</span>
-                        <h3>EduFlow</h3>
-                        <p>AI-Powered Learning Management System</p>
-                    </div>
-                    <div class="project-body">
-                        <p>A production-ready LMS featuring AI-driven learning modules, intelligent voice assistant, adaptive assessment generator, and secure document viewers with RBAC permissions.</p>
-                        <div class="project-techs">
-                            <span class="tech">Next.js</span>
-                            <span class="tech">Node.js</span>
-                            <span class="tech">Gemini API</span>
-                            <span class="tech">PostgreSQL</span>
-                            <span class="tech">OCR</span>
-                            <span class="tech">NLP</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-type">Fullstack + Google APIs</span>
-                        <h3>Drafty.AI</h3>
-                        <p>AI Email Automation Platform</p>
-                    </div>
-                    <div class="project-body">
-                        <p>Built dictation module for real-time voice-to-email generation, email summarization using Gemini, advanced Gmail-like filtering with classification, and Google Calendar integration.</p>
-                        <div class="project-techs">
-                            <span class="tech">React</span>
-                            <span class="tech">Node.js</span>
-                            <span class="tech">Google APIs</span>
-                            <span class="tech">Gemini</span>
-                            <span class="tech">Tailwind CSS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <span class="project-type">Full-stack</span>
-                        <h3>Legal Docs Summarization Platform</h3>
-                        <p>LLM-Based Document Analysis</p>
-                    </div>
-                    <div class="project-body">
-                        <p>Developed internal AI-driven tools with LLM-based automation, document summarization, and validation pipelines for legal document processing and analysis.</p>
-                        <div class="project-techs">
-                            <span class="tech">Next.js</span>
-                            <span class="tech">Node.js</span>
-                            <span class="tech">TypeScript</span>
-                            <span class="tech">OpenAI</span>
-                            <span class="tech">ShadCN</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    
     <!-- Skills Section -->
     <section class="skills" id="skills">
         <div class="container">
@@ -725,6 +956,142 @@
         </div>
     </section>
 
+    <!-- Education Section -->
+    <section class="education">
+        <div class="container">
+            <h2>Education</h2>
+            <div class="education-timeline">
+                <div class="education-item">
+                    <h3>BSc (Hons) in Information Technology</h3>
+                    <div class="institution">Sri Lanka Institute of Information Technology</div>
+                    <div class="education-period">Feb 2021 – Nov 2024</div>
+                    <div class="education-description">Specializing in Information Technology</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <h2>Professional Experience</h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <h3>Associate Software Engineer</h3>
+                    <div class="company">WIS</div>
+                    <div class="period">Jul 2025 – Nov 2025 | Colombo, Sri Lanka</div>
+                    <ul>
+                        <li>Designed, developed, and deployed production-ready LMS with AI-driven learning modules (EduFlow)</li>
+                        <li>Built AI Voice Assistant with contextual Q&A, NLP pipelines, OCR fallback, and Google TTS</li>
+                        <li>Engineered AI assessment generator with adaptive MCQs and PDF/PPT extraction</li>
+                        <li>Created document context extraction pipelines (PDF/PPT/OCR) for AI reasoning</li>
+                        <li>Built AI Email Automation Platform (Drafty.AI) with voice-to-email dictation and Gmail-like filtering</li>
+                        <li>Integrated multi-provider AI models (Gemini, OpenAI, OpenRouter) with fallback logic</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <h3>Associate Software Engineer</h3>
+                    <div class="company">XYGen.ai</div>
+                    <div class="period">Jan 2025 – Jun 2025 | Colombo, Sri Lanka</div>
+                    <ul>
+                        <li>Developed internal AI-driven tools with LLM-based automation for Legal Docs Summarization platform</li>
+                        <li>Implemented full-stack features using Next.js, Node.js, TypeScript, and cloud-hosted APIs</li>
+                        <li>Designed reusable backend modules and API utilities to improve developer productivity</li>
+                        <li>Enhanced UI workflows using React, Tailwind, and ShadCN</li>
+                        <li>Worked in Agile sprints with structured code reviews and CI/CD deployment workflows</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <h3>Junior Software Engineer</h3>
+                    <div class="company">XYGen.ai</div>
+                    <div class="period">Jul 2024 – Dec 2024 | Colombo, Sri Lanka</div>
+                    <ul>
+                        <li>Developed backend services using Node.js, Express, and contributed to internal microservices</li>
+                        <li>Built Laravel-based admin dashboard with CRUD modules, RBAC, and API integrations</li>
+                        <li>Implemented reusable UI components using React and Next.js</li>
+                        <li>Collaborated with senior engineers to refine architecture and follow best practices</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <h3>Software Engineer Intern</h3>
+                    <div class="company">XYGen.ai</div>
+                    <div class="period">Jan 2024 – Jun 2024 | Colombo, Sri Lanka</div>
+                    <ul>
+                        <li>Developed frontend components in React.js</li>
+                        <li>Wrote API routes and utility functions using Node.js and REST design patterns</li>
+                        <li>Contributed to dashboard development using Angular</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2>Key Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card" data-category="ai fullstack">
+                    <div class="project-header">
+                        <span class="project-type">Fullstack + AI/ML</span>
+                        <h3>EduFlow</h3>
+                        <p>AI-Powered Learning Management System</p>
+                    </div>
+                    <div class="project-body">
+                        <p>A production-ready LMS featuring AI-driven learning modules, intelligent voice assistant, adaptive assessment generator, and secure document viewers with RBAC permissions.</p>
+                        <div class="project-techs">
+                            <span class="tech">Next.js</span>
+                            <span class="tech">Node.js</span>
+                            <span class="tech">Gemini API</span>
+                            <span class="tech">PostgreSQL</span>
+                            <span class="tech">OCR</span>
+                            <span class="tech">NLP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="google fullstack">
+                    <div class="project-header">
+                        <span class="project-type">Fullstack + Google APIs</span>
+                        <h3>Drafty.AI</h3>
+                        <span class="project-type">AI Email Automation Platform</span>
+                    </div>
+                    <div class="project-body">
+                        <p>Built dictation module for real-time voice-to-email generation, email summarization using Gemini, advanced Gmail-like filtering with classification, and Google Calendar integration.</p>
+                        <div class="project-techs">
+                            <span class="tech">React</span>
+                            <span class="tech">Node.js</span>
+                            <span class="tech">Google APIs</span>
+                            <span class="tech">Gemini</span>
+                            <span class="tech">Tailwind CSS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="ai fullstack">
+                    <div class="project-header">
+                        <span class="project-type">Full-stack</span>
+                        <h3>Legal Docs Summarization Platform</h3>
+                        <p>LLM-Based Document Analysis</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Developed internal AI-driven tools with LLM-based automation, document summarization, and validation pipelines for legal document processing and analysis.</p>
+                        <div class="project-techs">
+                            <span class="tech">Next.js</span>
+                            <span class="tech">Node.js</span>
+                            <span class="tech">TypeScript</span>
+                            <span class="tech">OpenAI</span>
+                            <span class="tech">ShadCN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Publications Section -->
     <section class="publications">
         <div class="container">
@@ -747,6 +1114,252 @@
             </div>
             <p>&copy; 2025 Inkithai Meiyalagan. All rights reserved.</p>
         </div>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" class="form-control" rows="5" placeholder="Your message here..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit" id="submitBtn">Send Message</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://linkedin.com/in/inkithai" target="_blank">LinkedIn</a>
+                <a href="https://github.com/inkithai" target="_blank">GitHub</a>
+                <a href="mailto:inkithai@gmail.com">Email</a>
+            </div>
+            <p>&copy; 2026 Inkithai Meiyalagan. All rights reserved.</p>
+        </div>
     </footer>
+
+    <div id="progressBar"></div>
+    <button id="backToTop">↑</button>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70, // Account for fixed header
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.getElementById('mobileMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeToggle.classList.remove('light');
+                themeToggle.classList.add('dark');
+            } else {
+                themeToggle.classList.remove('dark');
+                themeToggle.classList.add('light');
+            }
+        });
+
+        // Project filtering
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category').includes(filter)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Form validation and submission
+        const contactForm = document.querySelector('.contact-form');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (name && email && message) {
+                // In a real application, you would send the data to a server
+                alert('Thank you for your message! I will get back to you soon.');
+                
+                // Reset form
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('message').value = '';
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements
+        document.querySelectorAll('.experience-item, .project-card, .education-item, .skill-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Update active navigation link based on scroll position
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Scroll progress bar
+        const progressBar = document.getElementById('progressBar');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Typing effect for hero section
+        const typingText = document.getElementById('typing-text');
+        const textArray = ['Full-Stack Software Engineer', 'AI Solutions Developer', 'Web Application Architect'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingSpeed = 100;
+        const deletingSpeed = 50;
+        const pauseTime = 1500;
+        
+        function typeEffect() {
+            const currentText = textArray[textIndex];
+            
+            if (!isDeleting && charIndex < currentText.length) {
+                // Typing phase
+                typingText.textContent += currentText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeEffect, typingSpeed);
+            } else if (isDeleting && charIndex > 0) {
+                // Deleting phase
+                typingText.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(typeEffect, deletingSpeed);
+            } else {
+                // Pause and switch direction
+                if (!isDeleting && charIndex === currentText.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, pauseTime);
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % textArray.length;
+                    setTimeout(typeEffect, typingSpeed);
+                }
+            }
+        }
+        
+
+
+        
+        // Start the typing effect after a short delay
+        setTimeout(typeEffect, 500);
+        
+
+        
+
+    </script>
 </body>
 </html>
