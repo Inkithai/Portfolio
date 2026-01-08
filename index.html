@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inkithai Meiyalagan - Full-Stack Software Engineer</title>
+    <style>
+        :root {
+            --color-primary: #2158D8;
+            --color-primary-dark: #1a4a9f;
+            --color-accent: #32b8c6;
+            --color-bg: #f8fafc;
+            --color-surface: #ffffff;
+            --color-text: #1a202c;
+            --color-text-secondary: #64748b;
+            --color-border: #e2e8f0;
+            --spacing: 16px;
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: var(--color-bg);
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 32px;
+        }
+
+        nav a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--color-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #2158D8 0%, #32b8c6 100%);
+            color: white;
+            padding: 100px var(--spacing);
+            text-align: center;
+        }
+
+        .hero .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 32px;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px var(--spacing);
+        }
+
+        section h2 {
+            font-size: 36px;
+            margin-bottom: 48px;
+            text-align: center;
+            color: var(--color-text);
+        }
+
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 24px;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+        }
+
+        .about-text p {
+            margin-bottom: 16px;
+            color: var(--color-text-secondary);
+            font-size: 16px;
+        }
+
+        .contact-info {
+            background: var(--color-surface);
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+        }
+
+        .contact-item {
+            margin-bottom: 16px;
+        }
+
+        .contact-item label {
+            font-weight: 600;
+            color: var(--color-primary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .contact-item a {
+            color: var(--color-accent);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .skill-card {
+            background: var(--color-surface);
+            padding: 32px;
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--color-accent);
+            box-shadow: 0 4px 12px rgba(50, 184, 198, 0.1);
+        }
+
+        .skill-card h3 {
+            font-size: 18px;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #eff6ff;
+            color: var(--color-primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Experience */
+        .experience-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .experience-item {
+            background: var(--color-surface);
+            padding: 32px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--color-primary);
+            margin-bottom: 24px;
+            border: 1px solid var(--color-border);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .experience-item h3 {
+            font-size: 20px;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .experience-item .company {
+            color: var(--color-accent);
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .experience-item .period {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .experience-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .experience-item li {
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .experience-item li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .project-card {
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--color-accent);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8f0f8 100%);
+            padding: 32px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .project-card h3 {
+            font-size: 20px;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .project-type {
+            display: inline-block;
+            background: #eff6ff;
+            color: var(--color-primary);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .project-body {
+            padding: 24px;
+        }
+
+        .project-body p {
+            color: var(--color-text-secondary);
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .project-techs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech {
+            background: #f1f5f9;
+            color: var(--color-text-secondary);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Publications */
+        .publication-card {
+            background: var(--color-surface);
+            padding: 32px;
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .publication-card h3 {
+            font-size: 20px;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+        }
+
+        .publication-meta {
+            color: var(--color-accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .publication-card p {
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-text);
+            color: white;
+            text-align: center;
+            padding: 40px var(--spacing);
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            margin-bottom: 24px;
+        }
+
+        .social-links a {
+            color: var(--color-accent);
+            text-decoration: none;
+            margin: 0 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 16px;
+                font-size: 14px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section h2 {
+                font-size: 28px;
+            }
+
+            .hero {
+                padding: 60px var(--spacing);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#home" class="logo">Inkithai</a>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Full-Stack Software Engineer</h1>
+            <p>Building AI-driven applications and scalable backend systems</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Who I Am</h3>
+                    <p>I&rsquo;m a passionate full-stack software engineer with expertise in building AI-driven applications. With a strong foundation in JavaScript/TypeScript, Python, and modern frameworks, I specialize in delivering production-ready solutions that combine intelligent systems with user-focused design.</p>
+                    <p>Currently working as an Associate Software Engineer, I&rsquo;ve led the development of AI-powered learning platforms, intelligent email automation systems, and scalable backend architectures. My experience spans from NLP pipelines and RAG-based retrieval to cloud integrations and microservices.</p>
+                    <p>I&rsquo;m passionate about collaborating in Agile teams, solving complex technical challenges, and creating high-impact solutions that make a real difference.</p>
+                </div>
+                <div class="contact-info" id="contact">
+                    <div class="contact-item">
+                        <label>Location</label>
+                        <p>Colombo, Sri Lanka</p>
+                    </div>
+                    <div class="contact-item">
+                        <label>Email</label>
+                        <a href="mailto:inkithai@gmail.com">inkithai@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <label>Phone</label>
+                        <a href="tel:+94750370177">+94 750 370 177</a>
+                    </div>
+                    <div class="contact-item">
+                        <label>LinkedIn</label>
+                        <a href="https://linkedin.com/in/inkithai" target="_blank">linkedin.com/in/inkithai</a>
+                    </div>
+                    <div class="contact-item">
+                        <label>GitHub</label>
+                        <a href="https://github.com/inkithai" target="_blank">github.com/inkithai</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <h2>Professional Experience</h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <h3>Associate Software Engineer</h3>
+                    <div class="company">WIS</div>
+                    <div class="period">Jul 2025 – Nov 2025 | Colombo, Sri Lanka</div>
+                    <ul>
+                        <li>Designed, developed, and deployed production-ready LMS with AI-driven learning modules (EduFlow)</li>
+                        <li>Built AI Voice Assistant with contextual Q&A, NLP pipelines, OCR fallback, and Google TTS</li>
+                        <li>Engineered AI assessment generator with adaptive MCQs and PDF/PPT extraction</li>
+                        <li>Created document context extraction pipelines (PDF/PPT/OCR) for AI reasoning</li>
+                        <li>Built AI Email Automation Platform (Drafty.AI) with voice-to-email dictation and Gmail-like filtering</li>
+                        <li>Integrated multi-provider AI models (Gemini, OpenAI, OpenRouter) with fallback logic</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <h3>Associate Software Engineer</h3>
+                    <div class="company">XYGen.ai</div>
+                    <div class="period">Jan 2025 – Jun 2025 | Colombo, Sri Lanka</div>
+                    <ul>
+                        <li>Developed internal AI-driven tools with LLM-based automation for Legal Docs Summarization platform</li>
+                        <li>Implemented full-stack features using Next.js, Node.js, TypeScript, and cloud-hosted APIs</li>
+                        <li>Designed reusable backend modules and API utilities to improve developer productivity</li>
+                        <li>Enhanced UI workflows using React, Tailwind, and ShadCN</li>
+                        <li>Worked in Agile sprints with structured code reviews and CI/CD deployment workflows</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <h3>Junior Software Engineer</h3>
+                    <div class="company">XYGen.ai</div>
+                    <div class="period">Jul 2024 – Dec 2024 | Colombo, Sri Lanka</div>
+                    <ul>
+                        <li>Developed backend services using Node.js, Express, and contributed to internal microservices</li>
+                        <li>Built Laravel-based admin dashboard with CRUD modules, RBAC, and API integrations</li>
+                        <li>Implemented reusable UI components using React and Next.js</li>
+                        <li>Collaborated with senior engineers to refine architecture and follow best practices</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <h3>Software Engineer Intern</h3>
+                    <div class="company">XYGen.ai</div>
+                    <div class="period">Jan 2024 – Jun 2024 | Colombo, Sri Lanka</div>
+                    <ul>
+                        <li>Developed frontend components in React.js</li>
+                        <li>Wrote API routes and utility functions using Node.js and REST design patterns</li>
+                        <li>Contributed to dashboard development using Angular</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2>Key Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-type">Fullstack + AI/ML</span>
+                        <h3>EduFlow</h3>
+                        <p>AI-Powered Learning Management System</p>
+                    </div>
+                    <div class="project-body">
+                        <p>A production-ready LMS featuring AI-driven learning modules, intelligent voice assistant, adaptive assessment generator, and secure document viewers with RBAC permissions.</p>
+                        <div class="project-techs">
+                            <span class="tech">Next.js</span>
+                            <span class="tech">Node.js</span>
+                            <span class="tech">Gemini API</span>
+                            <span class="tech">PostgreSQL</span>
+                            <span class="tech">OCR</span>
+                            <span class="tech">NLP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-type">Fullstack + Google APIs</span>
+                        <h3>Drafty.AI</h3>
+                        <p>AI Email Automation Platform</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Built dictation module for real-time voice-to-email generation, email summarization using Gemini, advanced Gmail-like filtering with classification, and Google Calendar integration.</p>
+                        <div class="project-techs">
+                            <span class="tech">React</span>
+                            <span class="tech">Node.js</span>
+                            <span class="tech">Google APIs</span>
+                            <span class="tech">Gemini</span>
+                            <span class="tech">Tailwind CSS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-type">Full-stack</span>
+                        <h3>Legal Docs Summarization Platform</h3>
+                        <p>LLM-Based Document Analysis</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Developed internal AI-driven tools with LLM-based automation, document summarization, and validation pipelines for legal document processing and analysis.</p>
+                        <div class="project-techs">
+                            <span class="tech">Next.js</span>
+                            <span class="tech">Node.js</span>
+                            <span class="tech">TypeScript</span>
+                            <span class="tech">OpenAI</span>
+                            <span class="tech">ShadCN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <h2>Skills &amp; Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">PHP</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Frontend Development</h3>
+                    <div class="skill-tags">
+                        <span class="tag">React.js</span>
+                        <span class="tag">Next.js</span>
+                        <span class="tag">Angular</span>
+                        <span class="tag">Tailwind CSS</span>
+                        <span class="tag">ShadCN</span>
+                        <span class="tag">Material UI</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Backend Development</h3>
+                    <div class="skill-tags">
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Express.js</span>
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">Django</span>
+                        <span class="tag">Laravel</span>
+                        <span class="tag">REST APIs</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3>AI &amp; Machine Learning</h3>
+                    <div class="skill-tags">
+                        <span class="tag">LLM Integration</span>
+                        <span class="tag">OpenAI</span>
+                        <span class="tag">Gemini</span>
+                        <span class="tag">NLP Pipelines</span>
+                        <span class="tag">RAG</span>
+                        <span class="tag">OCR</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Databases</h3>
+                    <div class="skill-tags">
+                        <span class="tag">MongoDB</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">Supabase</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Cloud &amp; DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="tag">Google Cloud</span>
+                        <span class="tag">AWS</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">CI/CD</span>
+                        <span class="tag">GitHub Actions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section class="publications">
+        <div class="container">
+            <h2>Research &amp; Publications</h2>
+            <div class="publication-card">
+                <h3>University Student Happiness Analysis</h3>
+                <div class="publication-meta">IEEE Publication – ICAC 2024 Conference</div>
+                <p>A Python web-based machine learning and artificial intelligence research project that analyzes academic, relational, economic, and social influences on university student happiness. This study leverages AI models and data analytics to provide insights, making it a significant contribution to the field of educational technology and well-being.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://linkedin.com/in/inkithai" target="_blank">LinkedIn</a>
+                <a href="https://github.com/inkithai" target="_blank">GitHub</a>
+                <a href="mailto:inkithai@gmail.com">Email</a>
+            </div>
+            <p>&copy; 2025 Inkithai Meiyalagan. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
